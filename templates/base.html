@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Grade-Ease{% endblock %}</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#e4e7ec; --brand:#3157a4; --soft:#f5f7fb; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--soft); color:var(--ink); font:16px/1.55 Arial,sans-serif; }
+    header { background:#172b4d; color:white; padding:20px 24px; }
+    header .wrap, main { max-width:1000px; margin:auto; }
+    header strong { font-size:1.25rem; }
+    main { padding:28px 18px 50px; }
+    .card { background:white; border:1px solid var(--line); border-radius:14px; padding:24px; margin-bottom:18px; box-shadow:0 3px 14px #10182808; }
+    h1,h2,h3 { line-height:1.25; }
+    h1 { margin-top:0; font-size:1.8rem; }
+    h2 { font-size:1.2rem; }
+    .muted { color:var(--muted); }
+    label { display:block; font-weight:700; margin:18px 0 8px; }
+    input[type=file] { width:100%; padding:12px; border:1px solid var(--line); border-radius:8px; background:white; }
+    button,.button { display:inline-block; margin-top:22px; background:var(--brand); color:white; border:0; padding:12px 18px; border-radius:8px; font-weight:700; cursor:pointer; text-decoration:none; }
+    .flash { background:#fff4e5; border:1px solid #ffd591; padding:12px; border-radius:8px; margin-bottom:14px; }
+    .hint { background:#f0f5ff; border-left:4px solid var(--brand); padding:14px; border-radius:6px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; }
+    .metric { padding:16px; background:#f8fafc; border:1px solid var(--line); border-radius:10px; }
+    .metric strong { display:block; font-size:1.5rem; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { text-align:left; padding:12px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+    th { background:#f8fafc; }
+    .answer { white-space:pre-wrap; overflow-wrap:anywhere; }
+    footer { color:var(--muted); font-size:.9rem; text-align:center; padding:20px; }
+    @media(max-width:650px) { .card { padding:16px; overflow-x:auto; } th,td { min-width:100px; } }
+  </style>
+</head>
+<body>
+<header><div class="wrap"><strong>Grade-Ease</strong> <span> · AI-assisted answer evaluation</span></div></header>
+<main>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}{% for message in messages %}<div class="flash">{{ message }}</div>{% endfor %}{% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer>Prototype only — review AI-generated marks before using them for real assessments.</footer>
+</body>
+</html>

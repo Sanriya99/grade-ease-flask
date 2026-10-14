@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Evaluation results · Grade-Ease{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Evaluation results</h1>
+  <div class="grid">
+    <div class="metric"><span class="muted">Marks awarded</span><strong>{{ total_awarded }} / {{ total_possible }}</strong></div>
+    <div class="metric"><span class="muted">Overall percentage</span><strong>{{ percentage }}%</strong></div>
+    <div class="metric"><span class="muted">Questions checked</span><strong>{{ results|length }}</strong></div>
+  </div>
+  <p class="muted">Review each answer before finalizing the score. Semantic similarity may reward wording that is similar but inaccurate, or penalize a correct answer phrased differently.</p>
+  <a class="button" href="{{ url_for('index') }}">Evaluate another sheet</a>
+</div>
+<div class="card">
+  <h2>Marks by question</h2>
+  <table>
+    <thead><tr><th>Q.</th><th>Type</th><th>Similarity / match</th><th>Marks</th></tr></thead>
+    <tbody>
+    {% for item in results %}
+      <tr>
+        <td>{{ item.number }}</td>
+        <td>{{ item.kind }}</td>
+        <td>{{ item.similarity }}%</td>
+        <td><strong>{{ item.awarded }} / {{ item.max_marks }}</strong></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% for item in results %}
+<div class="card">
+  <h2>Question {{ item.number }} <span class="muted">· {{ item.kind }} · {{ item.awarded }}/{{ item.max_marks }} marks</span></h2>
+  <h3>Reference answer</h3><div class="answer">{{ item.reference }}</div>
+  <h3>Student answer</h3><div class="answer">{{ item.student }}</div>
+</div>
+{% endfor %}
+<div class="card">
+  <h2>PDF text extraction summary</h2>
+  <p>Answer key: {{ key_pages|length }} page(s). Student sheet: {{ student_pages|length }} page(s).</p>
+  <p class="muted">The app uses pypdf to extract text page by page and split it into lines. Extraction order can be imperfect for multi-column layouts.</p>
+</div>
+{% endblock %}
